@@ -1,0 +1,1 @@
+-include $(LIB_PATH)/testsuite/build.mk
