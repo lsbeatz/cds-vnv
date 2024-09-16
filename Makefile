@@ -38,7 +38,7 @@ DASM := $(BUILD_PATH)/$(TARGET).dasm
 
 MKDIRS := $(dir $(OBJS))
 
-all: dir $(ELF) $(DASM) run
+all: clean dir $(ELF) $(DASM) run
 
 dir:
 	$(Q) mkdir -p $(MKDIRS)
