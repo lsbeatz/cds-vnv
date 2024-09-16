@@ -7,7 +7,7 @@ struct stack {
 	int	 capacity;
 };
 
-int stack_create(struct stack *s);
+struct stack *stack_create(void);
 int stack_destroy(struct stack *s);
 
 int stack_push(struct stack *s, int value);

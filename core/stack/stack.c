@@ -39,22 +39,24 @@ static int stack_grow(struct stack *s)
 	return 0;
 }
 
-int stack_create(struct stack *s)
+struct stack *stack_create(void)
 {
+	struct stack *s;
+
 	s = (struct stack *)malloc(sizeof(struct stack));
 	if (s == NULL) {
-		return -ENOMEM;
+		return NULL;
 	}
 
 	s->base = (int *)malloc(MIN_STACK_CAPACITY * sizeof(int));
 	if (s->base == NULL) {
-		return -ENOMEM;
+		return NULL;
 	}
 
 	s->top		= -1;
 	s->capacity = MIN_STACK_CAPACITY;
 
-	return 0;
+	return s;
 }
 
 int stack_destroy(struct stack *s)
