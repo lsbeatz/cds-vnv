@@ -171,6 +171,10 @@ int stack_peek(struct stack *s)
 		return -EINVAL;
 	}
 
+	if (s->top < 0) {
+		return -EINVAL;
+	}
+
 	return s->base[s->top];
 }
 
