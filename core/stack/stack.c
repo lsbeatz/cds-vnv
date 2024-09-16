@@ -98,6 +98,17 @@ struct stack *stack_create(void)
  */
 int stack_destroy(struct stack *s)
 {
+	if (s == NULL) {
+		return -EINVAL;
+	}
+
+	if (s->base == NULL) {
+		return -EINVAL;
+	}
+
+	free(s->base);
+	free(s);
+
 	return 0;
 }
 
@@ -112,7 +123,17 @@ int stack_destroy(struct stack *s)
  */
 int stack_push(struct stack *s, int value)
 {
-	// Hint: Use stack_grow() function when the stack is full!
+	int rc;
+
+	if (stack_is_full(s)) {
+		rc = stack_grow(s);
+		if (rc < 0) {
+			return rc;
+		}
+	}
+
+	s->base[++s->top] = value;
+>>>>>>> bc5ac99 (feat: add solution for stack.c)
 
 	return 0;
 }
@@ -127,6 +148,8 @@ int stack_push(struct stack *s, int value)
  */
 int stack_pop(struct stack *s)
 {
+	s->top--;
+
 	return 0;
 }
 
@@ -140,7 +163,15 @@ int stack_pop(struct stack *s)
  */
 int stack_peek(struct stack *s)
 {
-	return 0;
+	if (s == NULL) {
+		return -EINVAL;
+	}
+
+	if (s->base == NULL) {
+		return -EINVAL;
+	}
+
+	return s->base[s->top];
 }
 
 /*
@@ -153,7 +184,11 @@ int stack_peek(struct stack *s)
  */
 int stack_size(struct stack *s)
 {
-	return 0;
+	if (s == NULL) {
+		return -EINVAL;
+	}
+
+	return s->top + 1;
 }
 
 /*
@@ -166,5 +201,9 @@ int stack_size(struct stack *s)
  */
 int stack_capacity(struct stack *s)
 {
-	return 0;
+	if (s == NULL) {
+		return -EINVAL;
+	}
+
+	return s->capacity;
 }
