@@ -148,6 +148,10 @@ int stack_push(struct stack *s, int value)
  */
 int stack_pop(struct stack *s)
 {
+	if (stack_is_empty(s)) {
+		return -EINVAL;
+	}
+
 	s->top--;
 
 	return 0;
