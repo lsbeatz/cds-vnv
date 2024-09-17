@@ -60,13 +60,13 @@ void test_suite_execute(struct test_suite *ts)
 
 		switch (rc) {
 		case TEST_PASS:
-			TEST_LOG_PASS("execution time: %dms", elapsed);
+			TEST_LOG_PASS("execution time: %dus", elapsed);
 			break;
 		case TEST_FAIL:
-			TEST_LOG_FAIL("execution time: %dms", elapsed);
+			TEST_LOG_FAIL("execution time: %dus", elapsed);
 			break;
 		case TEST_SKIP:
-			TEST_LOG_SKIP("execution time: %dms", elapsed);
+			TEST_LOG_SKIP("execution time: %dus", elapsed);
 			break;
 		default:
 			break;
