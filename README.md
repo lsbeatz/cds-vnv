@@ -3,9 +3,9 @@ cds-vnv
 **cds-vnv** is a free tutorial for implementing data structures in C.
 
 ## Branch Description
-- main  
+- **main**  
 	Include only skeleton APIs. You can modify codes to study
-- solution  
+- **solution**  
 	Include example solutions
 
 ## How to build and run
