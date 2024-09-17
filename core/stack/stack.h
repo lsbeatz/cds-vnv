@@ -1,6 +1,13 @@
 #ifndef STACK_H
 #define STACK_H
 
+/*
+ * struct stack: Represents a dynamic stack data structure.
+ * Members:
+ *   - base: Pointer to the array that holds the stack elements.
+ *   - top: Index of the top element in the stack (-1 when the stack is empty).
+ *   - capacity: The current maximum capacity of the stack (in terms of elements).
+ */
 struct stack {
 	int *base;
 	int	 top;
