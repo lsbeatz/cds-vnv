@@ -26,17 +26,22 @@ bool queue_is_empty(struct queue *q)
 	return false;
 }
 
-int queue_enqueue(struct queue *q, int value)
+int queue_push(struct queue *q, int value)
 {
 	return 0;
 }
 
-int queue_dequeue(struct queue *q)
+int queue_pop(struct queue *q)
 {
 	return 0;
 }
 
-int queue_peek(struct queue *q)
+int queue_front(struct queue *q)
+{
+	return 0;
+}
+
+int queue_back(struct queue *q)
 {
 	return 0;
 }
