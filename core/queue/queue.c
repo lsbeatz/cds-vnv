@@ -16,7 +16,27 @@
  */
 struct queue *queue_create(int capacity)
 {
-	return NULL;
+	struct queue *q;
+
+	if (capacity <= 0) {
+		return NULL;
+	}
+
+	q = (struct queue *)malloc(sizeof(struct queue));
+	if (q == NULL) {
+		return NULL;
+	}
+
+	q->base = (int *)malloc((capacity + 1) * sizeof(int));
+	if (q->base == NULL) {
+		return NULL;
+	}
+
+	q->front    = 0;
+	q->back     = 0;
+	q->capacity = capacity + 1;
+
+	return q;
 }
 
 /*
@@ -29,6 +49,17 @@ struct queue *queue_create(int capacity)
  */
 int queue_destroy(struct queue *q)
 {
+	if (q == NULL) {
+		return -EINVAL;
+	}
+
+	if (q->base == NULL) {
+		return -EINVAL;
+	}
+
+	free(q->base);
+	free(q);
+
 	return 0;
 }
 
@@ -41,7 +72,15 @@ int queue_destroy(struct queue *q)
  */
 bool queue_is_full(struct queue *q)
 {
-	return false;
+	if (q == NULL) {
+		return false;
+	}
+
+	if (q->base == NULL) {
+		return false;
+	}
+
+	return (q->front + 1) % q->capacity == q->back;
 }
 
 /*
@@ -53,7 +92,15 @@ bool queue_is_full(struct queue *q)
  */
 bool queue_is_empty(struct queue *q)
 {
-	return false;
+	if (q == NULL) {
+		return false;
+	}
+
+	if (q->base == NULL) {
+		return false;
+	}
+
+	return q->front == q->back;
 }
 
 /*
@@ -68,6 +115,21 @@ bool queue_is_empty(struct queue *q)
  */
 int queue_push(struct queue *q, int value)
 {
+	if (q == NULL) {
+		return -EINVAL;
+	}
+
+	if (q->base == NULL) {
+		return -EINVAL;
+	}
+
+	if (queue_is_full(q)) {
+		return -ENOMEM;
+	}
+
+	q->front = (q->front + 1) % q->capacity;
+	q->base[q->front] = value;
+
 	return 0;
 }
 
@@ -81,6 +143,20 @@ int queue_push(struct queue *q, int value)
  */
 int queue_pop(struct queue *q)
 {
+	if (q == NULL) {
+		return -EINVAL;
+	}
+
+	if (q->base == NULL) {
+		return -EINVAL;
+	}
+
+	if (queue_is_empty(q)) {
+		return -EINVAL;
+	}
+
+	q->back = (q->back + 1) % q->capacity;
+
 	return 0;
 }
 
@@ -94,7 +170,19 @@ int queue_pop(struct queue *q)
  */
 int queue_front(struct queue *q)
 {
-	return 0;
+	if (q == NULL) {
+		return -EINVAL;
+	}
+
+	if (q->base == NULL) {
+		return -EINVAL;
+	}
+
+	if (queue_is_empty(q)) {
+		return -EINVAL;
+	}
+
+	return q->base[q->front];
 }
 
 /*
@@ -107,7 +195,19 @@ int queue_front(struct queue *q)
  */
 int queue_back(struct queue *q)
 {
-	return 0;
+	if (q == NULL) {
+		return -EINVAL;
+	}
+
+	if (q->base == NULL) {
+		return -EINVAL;
+	}
+
+	if (queue_is_empty(q)) {
+		return -EINVAL;
+	}
+
+	return q->base[q->back];
 }
 
 /*
@@ -120,7 +220,22 @@ int queue_back(struct queue *q)
  */
 int queue_size(struct queue *q)
 {
-	return 0;
+	int size;
+
+	if (q == NULL) {
+		return -EINVAL;
+	}
+
+	if (q->base == NULL) {
+		return -EINVAL;
+	}
+
+	size = q->front - q->back + 1;
+	if (size < 0) {
+		size +=q->capacity;
+	}
+
+	return size;
 }
 
 /*
@@ -133,5 +248,13 @@ int queue_size(struct queue *q)
  */
 int queue_capacity(struct queue *q)
 {
-	return 0;
+	if (q == NULL) {
+		return -EINVAL;
+	}
+
+	if (q->base == NULL) {
+		return -EINVAL;
+	}
+
+	return q->capacity - 1;
 }
