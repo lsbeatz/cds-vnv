@@ -1,1 +1,2 @@
 -include $(CORE_PATH)/stack/build.mk
+-include $(CORE_PATH)/queue/build.mk
