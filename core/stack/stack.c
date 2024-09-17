@@ -112,6 +112,8 @@ int stack_destroy(struct stack *s)
  */
 int stack_push(struct stack *s, int value)
 {
+	// Hint: Use stack_grow() function when the stack is full!
+
 	return 0;
 }
 
