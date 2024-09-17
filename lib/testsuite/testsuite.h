@@ -49,19 +49,31 @@ struct test_suite {
 		test_suite_execute(&test_suite_##ts);	\
 	} while (0)
 
-#define TEST_LOG(hdr, color, fmt, ...)										\
-	do {																	\
-		printf(color "[%-8s] " TERMCOLOR_RESET fmt "\n", #hdr, __VA_ARGS__);\
+#define TEST_LOG(hdr, color, fmt, ...)											\
+	do {																		\
+		printf(color "[%-8s] " TERMCOLOR_RESET fmt "\n", #hdr, ##__VA_ARGS__);	\
 	} while (0)
 
-#define TEST_LOG_LOAD(fmt, ...)	  TEST_LOG(LOAD, TERMCOLOR_RESET, fmt, __VA_ARGS__)
-#define TEST_LOG_SUITE(fmt, ...)  TEST_LOG(SUITE, TERMCOLOR_RESET, fmt, __VA_ARGS__)
-#define TEST_LOG_CASE(fmt, ...)	  TEST_LOG(CASE, TERMCOLOR_GREEN, fmt, __VA_ARGS__)
-#define TEST_LOG_PASS(fmt, ...)	  TEST_LOG(PASS, TERMCOLOR_GREEN, fmt, __VA_ARGS__)
-#define TEST_LOG_FAIL(fmt, ...)	  TEST_LOG(FAIL, TERMCOLOR_RED, fmt, __VA_ARGS__)
-#define TEST_LOG_SKIP(fmt, ...)	  TEST_LOG(SKIP, TERMCOLOR_BLUE, fmt, __VA_ARGS__)
-#define TEST_LOG_WARN(fmt, ...)	  TEST_LOG(WARN, TERMCOLOR_YELLOW, fmt, __VA_ARGS__)
-#define TEST_LOG_ASSERT(fmt, ...) TEST_LOG(ASSERT, TERMCOLOR_MAGENTA, fmt, __VA_ARGS__)
+#define TEST_LOG_SUITE(fmt, ...)												\
+	do {																		\
+		printf("\n");															\
+		printf("=======================================================\n");	\
+		printf(fmt "\n", ##__VA_ARGS__);										\
+		printf("=======================================================\n");	\
+	} while (0)
+
+#define TEST_LOG_CASE(fmt, ...)													\
+	do {																		\
+		printf("\n[" fmt "]\n", ##__VA_ARGS__);									\
+		printf("-------------------------------------------------------\n");	\
+	} while (0)
+
+#define TEST_LOG_LOAD(fmt, ...)	  TEST_LOG(LOAD, TERMCOLOR_RESET, fmt, ##__VA_ARGS__)
+#define TEST_LOG_PASS(fmt, ...)	  TEST_LOG(PASS, TERMCOLOR_GREEN, fmt, ##__VA_ARGS__)
+#define TEST_LOG_FAIL(fmt, ...)	  TEST_LOG(FAIL, TERMCOLOR_RED, fmt, ##__VA_ARGS__)
+#define TEST_LOG_SKIP(fmt, ...)	  TEST_LOG(SKIP, TERMCOLOR_BLUE, fmt, ##__VA_ARGS__)
+#define TEST_LOG_WARN(fmt, ...)	  TEST_LOG(WARN, TERMCOLOR_YELLOW, fmt, ##__VA_ARGS__)
+#define TEST_LOG_ASSERT(fmt, ...) TEST_LOG(ASSERT, TERMCOLOR_MAGENTA, fmt, ##__VA_ARGS__)
 
 #define TEST_ASSERT(a, op, b)													\
 	do {																		\

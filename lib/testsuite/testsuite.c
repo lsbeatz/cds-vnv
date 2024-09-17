@@ -24,12 +24,13 @@ void test_case_add(struct test_suite *ts, struct test_case *tc)
 	}
 	ts->nr_tests++;
 
-	TEST_LOG_LOAD("TS[%s]: add TC%02d(%s)", ts->name, ts->nr_tests, tc->name);
+	TEST_LOG_LOAD("Test Suite(%s) <= add TC%02d(%s)", ts->name, ts->nr_tests, tc->name);
 }
 
 void test_suite_execute(struct test_suite *ts)
 {
 	int rc;
+	int tc_num;
 	int results[NR_TEST_RC];
 	int elapsed;
 
@@ -42,14 +43,14 @@ void test_suite_execute(struct test_suite *ts)
 		return;
 	}
 
-	printf("================================\n");
-	TEST_LOG_SUITE("Start TS[%s]", ts->name);
+	TEST_LOG_SUITE("Running Test Suite: %s", ts->name);
 
 	memset(results, 0, sizeof(results));
 
 	tc = ts->tc_head;
+	tc_num = 1;
 	while (tc) {
-		TEST_LOG_CASE("TC(%s)", tc->name);
+		TEST_LOG_CASE("Test Case %02d: %s", tc_num, tc->name);
 
 		gettimeofday(&start, NULL);
 		rc = tc->func();
@@ -73,7 +74,16 @@ void test_suite_execute(struct test_suite *ts)
 
 		results[rc]++;
 		tc = tc->next;
+		tc_num++;
 	}
 
-	TEST_LOG_SUITE("End TS[%s]", ts->name);
+	TEST_LOG_SUITE(
+		"Test Suite Summary: %s\n"
+		"total %d, "
+		TERMCOLOR_GREEN  "%d passed, "
+		TERMCOLOR_RED    "%d failed, "
+		TERMCOLOR_YELLOW "%d skipped "
+		TERMCOLOR_RESET,
+		ts->name, ts->nr_tests, results[TEST_PASS], results[TEST_FAIL], results[TEST_SKIP]
+	);
 }
