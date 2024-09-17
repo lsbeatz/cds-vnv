@@ -11,7 +11,7 @@
 
 static inline bool stack_is_full(struct stack *s)
 {
-	return s->top == s->capacity;
+	return s->top + 1 == s->capacity;
 }
 
 static inline bool stack_is_empty(struct stack *s)
