@@ -133,7 +133,6 @@ int stack_push(struct stack *s, int value)
 	}
 
 	s->base[++s->top] = value;
->>>>>>> bc5ac99 (feat: add solution for stack.c)
 
 	return 0;
 }
