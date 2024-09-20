@@ -207,7 +207,7 @@ int queue_back(struct queue *q)
 		return -EINVAL;
 	}
 
-	return q->base[q->back];
+	return q->base[(q->back + 1) % q->capacity];
 }
 
 /*
@@ -230,9 +230,9 @@ int queue_size(struct queue *q)
 		return -EINVAL;
 	}
 
-	size = q->front - q->back + 1;
+	size = q->front - q->back;
 	if (size < 0) {
-		size +=q->capacity;
+		size += q->capacity;
 	}
 
 	return size;
