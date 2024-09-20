@@ -6,13 +6,14 @@ else
 Q :=
 endif
 
-TARGET ?= cds
+TEST_SUITE ?= stack
+TARGET     ?= cds-$(TEST_SUITE)
 
 ROOT_PATH  := $(shell pwd)
 LIB_PATH   := $(ROOT_PATH)/lib
 CORE_PATH  := $(ROOT_PATH)/core
 TESTS_PATH := $(ROOT_PATH)/tests
-BUILD_PATH := $(ROOT_PATH)/build
+BUILD_PATH := $(ROOT_PATH)/build/$(TEST_SUITE)
 
 CC      := gcc
 LD      := ld
