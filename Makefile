@@ -6,7 +6,7 @@ else
 Q :=
 endif
 
-TEST_SUITE ?= stack
+TEST_SUITE ?= queue
 TARGET     ?= cds-$(TEST_SUITE)
 
 ROOT_PATH  := $(shell pwd)
