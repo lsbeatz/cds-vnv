@@ -29,6 +29,7 @@ struct queue *queue_create(int capacity)
 
 	q->base = (int *)malloc((capacity + 1) * sizeof(int));
 	if (q->base == NULL) {
+		free(q);
 		return NULL;
 	}
 
