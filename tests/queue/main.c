@@ -182,7 +182,6 @@ TEST_CASE(queue, hanlde_null_ptr)
 TEST_CASE(queue, non_positive_capacity)
 {
 	struct queue *q;
-	int rc;
 
 	q = queue_create(0);
 	TEST_ASSERT_EQ(q, NULL);
